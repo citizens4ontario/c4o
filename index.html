@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizens 4 Ontario — Making Ontario More Transparent For All</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Roboto Slab, Inter, Space Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Slab:wght@700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Configure Tailwind Brand Tokens -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate900: '#0F172A',     // Primary: Investigative Slate
+                        signal: '#E9B8C9',       // Secondary Accent: Signal Rose/Red
+                        signalDark: '#d48ea7',   // Hover/Active state for Signal
+                        dashLight: '#F8F9FA',    // Secondary Background: Dashboard Light
+                        slate800: '#1E293B',
+                        slate700: '#334155',
+                    },
+                    fontFamily: {
+                        slab: ['"Roboto Slab"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace'],
+                    },
+                    boxShadow: {
+                        'placard': '6px 6px 0px 0px #E9B8C9',
+                        'placard-dark': '6px 6px 0px 0px #0F172A',
+                        'placard-sm': '4px 4px 0px 0px #0F172A',
+                        'placard-white': '6px 6px 0px 0px #F8F9FA',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Campaign & Civic Grid Styling */
+        body {
+            background-color: #0F172A;
+            color: #F8F9FA;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Investigative Blueprint Grid Overlay */
+        .civic-grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(233, 184, 201, 0.07) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(233, 184, 201, 0.07) 1px, transparent 1px);
+        }
+
+        .civic-grid-light {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+        }
+
+        /* Grassroots Slanted Headline Banner Effect (AOC Splash Inspired) */
+        .placard-slant {
+            transform: rotate(-1.5deg);
+        }
+        
+        .placard-slant-reverse {
+            transform: rotate(1deg);
+        }
+
+        /* Custom Checkbox Card Transitions */
+        .pathway-card {
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .pathway-card.selected {
+            background-color: #0F172A;
+            color: #F8F9FA;
+            border-color: #0F172A;
+            box-shadow: 5px 5px 0px 0px #E9B8C9;
+            transform: translate(-2px, -2px);
+        }
+
+        .pathway-card.selected .check-indicator {
+            background-color: #E9B8C9;
+            border-color: #E9B8C9;
+            color: #0F172A;
+        }
+
+        .pathway-card.selected .pathway-tag {
+            background-color: rgba(233, 184, 201, 0.2);
+            color: #E9B8C9;
+            border-color: rgba(233, 184, 201, 0.4);
+        }
+
+        .pathway-card.selected .pathway-desc {
+            color: #CBD5E1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-signal selection:text-slate900">
+
+    <!-- STICKY NAVIGATION / STATUS BAR -->
+    <header class="border-b-2 border-signal/30 bg-slate900/95 backdrop-blur-md sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Badge -->
+            <a href="#" class="flex items-center gap-3 group focus:outline-none">
+                <div class="w-10 h-10 rounded-lg bg-signal text-slate900 flex items-center justify-center font-slab font-black text-xl border-2 border-dashLight shadow-sm group-hover:scale-105 transition-transform">
+                    C4O
+                </div>
+                <div>
+                    <span class="font-mono text-xs uppercase tracking-widest text-signal block leading-none">@Citizens4Ontario</span>
+                    <span class="font-slab font-bold text-dashLight text-base tracking-tight">CIVIC WATCH & ACTION</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN ASYMMETRICAL SPLIT-SCREEN SPLASH (AOC Splash Inspired) -->
+    <main class="flex-grow civic-grid-bg relative flex items-center">
+        <!-- Decorative Background Ontario Map Vector / Coordinates Overlay -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden opacity-15" aria-hidden="true">
+            <svg class="absolute -left-24 top-12 w-[600px] h-[600px] text-signal" viewBox="0 0 400 400" fill="none">
+                <!-- Stylized street grid & district boundaries -->
+                <rect x="40" y="40" width="320" height="320" stroke="currentColor" stroke-width="2" stroke-dasharray="8 8"/>
+                <line x1="40" y1="120" x2="360" y2="120" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="40" y1="220" x2="360" y2="220" stroke="currentColor" stroke-width="3"/>
+                <line x1="40" y1="300" x2="360" y2="300" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="140" y1="40" x2="140" y2="360" stroke="currentColor" stroke-width="3"/>
+                <line x1="250" y1="40" x2="250" y2="360" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="140" cy="220" r="18" stroke="currentColor" stroke-width="3"/>
+                <circle cx="140" cy="220" r="5" fill="currentColor"/>
+                <circle cx="250" cy="120" r="12" stroke="currentColor" stroke-width="2"/>
+                <path d="M40 280 L140 220 L250 120 L360 90" stroke="currentColor" stroke-width="2.5"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- LEFT COLUMN: GRASSROOTS RALLYING CRY (7 Cols on Desktop) -->
+                <div class="lg:col-span-7 space-y-8">
+                    
+                    <!-- High-Impact Campaign Placard Headline -->
+                    <div class="space-y-4">
+                        <div class="inline-block bg-signal text-slate900 px-4 py-1.5 rounded-md font-mono text-xs sm:text-sm font-bold uppercase tracking-widest placard-slant shadow-placard-sm border-2 border-dashLight">
+                            OUR CITY. OUR TAX DOLLARS. OUR FUTURE.
+                        </div>
+
+                        <!-- REQUIRED MAIN TITLE -->
+                        <h1 class="font-slab font-black text-5xl sm:text-6xl xl:text-7xl tracking-tight text-dashLight uppercase leading-[0.95] drop-shadow-sm">
+                            Citizens 4 <span class="text-signal underline decoration-4 underline-offset-8">Ontario</span>
+                        </h1>
+
+                        <!-- REQUIRED SUB-HEADER -->
+                        <div class="pt-1">
+                            <h2 class="inline-block bg-dashLight text-slate900 font-slab font-extrabold text-xl sm:text-2xl md:text-3xl px-4 py-2.5 rounded-lg border-2 border-slate900 shadow-placard placard-slant-reverse">
+                                Making Ontario more transparent for all
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Passionate Advocate Copy -->
+                    <div class="space-y-5 text-dashLight/90 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+                        <p class="font-medium text-lg sm:text-xl text-dashLight">
+                            For too long, critical decisions about Ontario’s neighborhoods, warehouse developments, infrastructure, and public budgets have happened behind closed doors. <span class="text-signal font-bold">That ends when we start looking together.</span>
+                        </p>
+                        <p class="text-dashLight/80">
+                            <strong>Citizens 4 Ontario</strong> is a people-powered movement combining <span class="font-mono text-sm bg-slate800 text-signal px-2 py-0.5 rounded border border-signal/40">open-data investigation</span> with <span class="font-mono text-sm bg-slate800 text-signal px-2 py-0.5 rounded border border-signal/40">grassroots organizing</span>. We teach everyday residents how City Hall actually works, share what we uncover with every block in the city, and back bold progressive neighbors ready to run and win.
+                        </p>
+                    </div>
+
+                    <!-- Civic Transparency Tags & Coordinates Strip -->
+                    <div class="pt-2 flex flex-wrap items-center gap-2.5 font-mono text-xs">
+                        <span class="bg-slate800 text-signal border border-signal/40 px-3 py-1.5 rounded-md font-bold uppercase">
+                    <!-- Civic Transparency Tags Strip -->
+                    <div class="pt-2 flex flex-wrap items-center gap-2.5 font-mono text-xs">
+                        <span class="bg-slate800 text-signal border border-signal/40 px-3 py-1.5 rounded-md font-bold uppercase">
+                            ✓ PUBLIC BUDGETS
+                        </span>
+                        <span class="bg-slate800 text-signal border border-signal/40 px-3 py-1.5 rounded-md font-bold uppercase">
+                            ✓ NEIGHBORHOOD VOICE
+                        </span>
+                        <span class="bg-slate800 text-signal border border-signal/40 px-3 py-1.5 rounded-md font-bold uppercase">
+                            ✓ ACCOUNTABLE LEADERSHIP
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN: HIGH-CONTRAST ACTION SIGNUP CARD (5 Cols on Desktop) -->
+                <div class="lg:col-span-5">
+                    <div class="bg-dashLight text-slate900 rounded-2xl border-4 border-slate900 shadow-placard p-6 sm:p-8 relative civic-grid-light">
+                        
+                        <!-- Top Corner Folder Tab Badge -->
+                        <div class="flex items-center justify-between border-b-2 border-slate900 pb-4 mb-6">
+                            <div>
+                                <span class="font-mono text-xs font-bold uppercase tracking-widest text-slate900/70 block">ACTION INTAKE FORM // #C4O-2026</span>
+                                <h3 class="font-slab font-black text-2xl sm:text-3xl text-slate900 tracking-tight">
+                                    ADD YOUR NAME
+                                </h3>
+                            </div>
+                            <div class="bg-slate900 text-signal font-mono text-xs font-bold px-3 py-1.5 rounded-md border border-slate900">
+                                STEP 1 OF 1
+                            </div>
+                        </div>
+
+                        <!-- FORM CONTAINER -->
+                        <form id="signupForm" class="space-y-5" novalidate>
+                            
+                            <!-- Error Alert Banner (Hidden by default, no alert() used) -->
+                            <div id="formErrorBanner" class="hidden bg-slate900 text-signal border-l-4 border-signal p-3.5 rounded-lg font-mono text-xs flex items-start gap-2.5">
+                                <svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                                <span id="formErrorText">Please complete all required fields and choose at least one way to get involved.</span>
+                            </div>
+
+                            <!-- 1. Full Name -->
+                            <div>
+                                <label for="fullName" class="block font-mono text-xs font-bold uppercase tracking-wider text-slate900 mb-1.5">
+                                    Full Name <span class="text-rose-700">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="fullName" 
+                                    name="fullName" 
+                                    required
+                                    placeholder="e.g. Elena Ramirez"
+                                    class="w-full bg-white text-slate900 placeholder-slate-400 font-sans text-base px-4 py-3 rounded-lg border-2 border-slate900 focus:outline-none focus:ring-4 focus:ring-signal transition-all"
+                                >
+                            </div>
+
+                            <!-- 2. Contact Information (Email & Phone) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="email" class="block font-mono text-xs font-bold uppercase tracking-wider text-slate900 mb-1.5">
+                                        Email Address <span class="text-rose-700">*</span>
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        required
+                                        placeholder="you@example.com"
+                                        class="w-full bg-white text-slate900 placeholder-slate-400 font-sans text-base px-3.5 py-3 rounded-lg border-2 border-slate900 focus:outline-none focus:ring-4 focus:ring-signal transition-all"
+                                    >
+                                </div>
+                                <div>
+                                    <label for="phone" class="block font-mono text-xs font-bold uppercase tracking-wider text-slate900 mb-1.5">
+                                        Phone Number <span class="text-rose-700">*</span>
+                                    </label>
+                                    <input 
+                                        type="tel" 
+                                        id="phone" 
+                                        name="phone" 
+                                        required
+                                        placeholder="(909) 555-0194"
+                                        class="w-full bg-white text-slate900 placeholder-slate-400 font-sans text-base px-3.5 py-3 rounded-lg border-2 border-slate900 focus:outline-none focus:ring-4 focus:ring-signal transition-all"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- 3. How would you like to get involved with Citizens 4 Ontario? -->
+                            <div class="pt-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <label class="block font-mono text-xs font-bold uppercase tracking-wider text-slate900">
+                                        How would you like to get involved with Citizens 4 Ontario? <span class="text-rose-700">*</span>
+                                    </label>
+                                </div>
+                                <p class="text-xs text-slate700 mb-3 font-medium">
+                                    Select all pathways that interest you — we’ll follow up with tailored tools & next steps:
+                                </p>
+
+                                <div class="space-y-3" role="group" aria-label="Involvement Pathways">
+                                    
+                                    <!-- Option 1: Considering an elected position -->
+                                    <label class="pathway-card block cursor-pointer bg-white border-2 border-slate900 rounded-xl p-3.5 select-none" data-pathway="Considering an elected position">
+                                        <input type="checkbox" name="involvement" value="Considering an elected position" class="sr-only pathway-checkbox">
+                                        <div class="flex items-start gap-3.5">
+                                            <div class="check-indicator w-6 h-6 rounded-md border-2 border-slate900 bg-dashLight flex items-center justify-center shrink-0 mt-0.5 transition-colors">
+                                                <svg class="w-4 h-4 opacity-0 check-icon transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <div class="flex flex-wrap items-center justify-between gap-1">
+                                                    <span class="font-slab font-bold text-base leading-snug">
+                                                        Considering an elected position
+                                                    </span>
+                                                    <span class="pathway-tag font-mono text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-signal/40 text-slate900 border border-slate900/20">
+                                                        CANDIDATE PIPELINE
+                                                    </span>
+                                                </div>
+                                                <p class="pathway-desc text-xs text-slate700 mt-1 leading-relaxed">
+                                                    Explore running for City Council, School Board, or local commissions with grassroots backing.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Option 2: Learn how the city works to share with others -->
+                                    <label class="pathway-card block cursor-pointer bg-white border-2 border-slate900 rounded-xl p-3.5 select-none" data-pathway="Learn how the city works to share with others">
+                                        <input type="checkbox" name="involvement" value="Learn how the city works to share with others" class="sr-only pathway-checkbox" checked>
+                                        <div class="flex items-start gap-3.5">
+                                            <div class="check-indicator w-6 h-6 rounded-md border-2 border-slate900 bg-dashLight flex items-center justify-center shrink-0 mt-0.5 transition-colors">
+                                                <svg class="w-4 h-4 opacity-0 check-icon transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <div class="flex flex-wrap items-center justify-between gap-1">
+                                                    <span class="font-slab font-bold text-base leading-snug">
+                                                        Learn how the city works to share with others
+                                                    </span>
+                                                    <span class="pathway-tag font-mono text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-signal/40 text-slate900 border border-slate900/20">
+                                                        CIVIC INVESTIGATOR
+                                                    </span>
+                                                </div>
+                                                <p class="pathway-desc text-xs text-slate700 mt-1 leading-relaxed">
+                                                    Join workshops on tracking city budgets, council agendas, and contracts to inform your neighbors.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <!-- Option 3: Volunteer to help progressive candidates get elected -->
+                                    <label class="pathway-card block cursor-pointer bg-white border-2 border-slate900 rounded-xl p-3.5 select-none" data-pathway="Volunteer to help progressive candidates get elected">
+                                        <input type="checkbox" name="involvement" value="Volunteer to help progressive candidates get elected" class="sr-only pathway-checkbox">
+                                        <div class="flex items-start gap-3.5">
+                                            <div class="check-indicator w-6 h-6 rounded-md border-2 border-slate900 bg-dashLight flex items-center justify-center shrink-0 mt-0.5 transition-colors">
+                                                <svg class="w-4 h-4 opacity-0 check-icon transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                            </div>
+                                            <div class="flex-grow">
+                                                <div class="flex flex-wrap items-center justify-between gap-1">
+                                                    <span class="font-slab font-bold text-base leading-snug">
+                                                        Volunteer to help progressive candidates get elected
+                                                    </span>
+                                                    <span class="pathway-tag font-mono text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-signal/40 text-slate900 border border-slate900/20">
+                                                        CAMPAIGN SQUAD
+                                                    </span>
+                                                </div>
+                                                <p class="pathway-desc text-xs text-slate700 mt-1 leading-relaxed">
+                                                    Knock doors, host house meetings, and mobilize voters to elect accountable community champions.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <!-- Submit CTA Button -->
+                            <div class="pt-2">
+                                <button 
+                                    type="submit" 
+                                    class="w-full bg-slate900 hover:bg-slate800 text-signal font-slab font-black text-lg sm:text-xl uppercase tracking-wider py-4 px-6 rounded-xl border-2 border-slate900 shadow-placard transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 group"
+                                >
+                                    <span>JOIN CITIZENS 4 ONTARIO</span>
+                                    <svg class="w-6 h-6 text-signal group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Grassroots SMS/Email Disclaimer -->
+                            <p class="font-mono text-[11px] text-slate700 leading-relaxed pt-1">
+                                By submitting this form, you agree to receive periodic email and automated text updates from <strong>Citizens 4 Ontario</strong> about local civic investigations, community trainings, and progressive campaign actions. Msg & data rates may apply. Text STOP to opt out anytime.
+                            </p>
+                        </form>
+
+                        <!-- CONFIRMATION STATE (Hidden until form submission) -->
+                        <div id="confirmationState" class="hidden space-y-6 py-3">
+                            <div class="bg-slate900 text-dashLight p-5 rounded-xl border-2 border-slate900 shadow-placard">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="font-mono text-xs font-bold uppercase px-2.5 py-1 rounded bg-signal text-slate900">
+                                        ✓ CREDENTIAL LOGGED
+                                    </span>
+                                    <span id="confirmTimestamp" class="font-mono text-xs text-signal"></span>
+                                </div>
+                                <h4 class="font-slab font-black text-2xl sm:text-3xl text-dashLight mb-2">
+                                    Welcome to the Movement, <span id="confirmName" class="text-signal underline">Neighbor</span>!
+                                </h4>
+                                <p class="text-sm text-dashLight/85 leading-relaxed">
+                                    Ontario gets more transparent the moment residents like you step forward. We’ve sent a welcome dispatch to <strong id="confirmEmail" class="text-signal font-mono"></strong> and logged your phone (<span id="confirmPhone" class="font-mono"></span>) for rapid action alerts.
+                                </p>
+                            </div>
+
+                            <!-- Selected Pathways Summary -->
+                            <div class="bg-white border-2 border-slate900 rounded-xl p-4 space-y-2.5">
+                                <div class="font-mono text-xs font-bold uppercase tracking-wider text-slate900 flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-slate900"></span>
+                                    YOUR SELECTED ACTION TRACKS:
+                                </div>
+                                <ul id="confirmPathwaysList" class="space-y-2 text-sm font-semibold text-slate900">
+                                    <!-- Dynamically populated -->
+                                </ul>
+                            </div>
+
+                            <!-- Share / Copy Link & Reset Actions -->
+                            <div class="space-y-3 pt-1">
+                                <div class="font-mono text-xs font-bold uppercase text-slate900">
+                                    DOUBLE YOUR IMPACT — INVITE A NEIGHBOR IN ONTARIO:
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <button 
+                                        type="button" 
+                                        onclick="copySplashLink()"
+                                        id="copyLinkBtn"
+                                        class="flex-1 bg-signal hover:bg-signalDark text-slate900 font-mono text-xs sm:text-sm font-bold uppercase py-3 px-4 rounded-xl border-2 border-slate900 shadow-placard-sm transition-all flex items-center justify-center gap-2"
+                                    >
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span id="copyLinkText">Copy Recruitment Link</span>
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onclick="resetSignupForm()"
+                                        class="bg-white hover:bg-slate-100 text-slate900 font-mono text-xs font-bold uppercase py-3 px-4 rounded-xl border-2 border-slate900 transition-all"
+                                    >
+                                        + Sign Up Another Resident
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- BOTTOM CIVIC DATA BAR / FOOTER -->
+    <footer class="border-t-2 border-signal/30 bg-slate900 py-8 px-4 sm:px-6 lg:px-8 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2.5">
+                    <span class="font-slab font-black text-lg text-dashLight uppercase">Citizens 4 Ontario</span>
+                    <span class="font-mono text-xs px-2 py-0.5 rounded bg-signal/20 text-signal border border-signal/40">
+                        @Citizens4Ontario
+                    </span>
+                </div>
+                <p class="font-mono text-xs text-dashLight/70">
+                    Making Ontario more transparent for all • Powered by everyday residents, researchers & grassroots volunteers.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
+                <span class="px-3 py-1.5 rounded bg-slate800 text-dashLight/90 border border-signal/30 uppercase">
+                    GRASSROOTS COMMUNITY ACTION • ONTARIO, CA
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- APPLICATION LOGIC -->
+    <script>
+        // Initialize interactive checkbox cards on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.pathway-checkbox');
+            
+            function syncCardStates() {
+                checkboxes.forEach(cb => {
+                    const card = cb.closest('.pathway-card');
+                    const icon = card.querySelector('.check-icon');
+                    if (cb.checked) {
+                        card.classList.add('selected');
+                        icon.classList.remove('opacity-0');
+                    } else {
+                        card.classList.remove('selected');
+                        icon.classList.add('opacity-0');
+                    }
+                });
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', syncCardStates);
+            });
+
+            // Initial sync for pre-checked default option
+            syncCardStates();
+
+            // Phone number auto-formatting for US numbers
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', (e) => {
+                let digits = e.target.value.replace(/\D/g, '').substring(0, 10);
+                let formatted = '';
+                if (digits.length > 0) {
+                    formatted = '(' + digits.substring(0, 3);
+                }
+                if (digits.length >= 4) {
+                    formatted += ') ' + digits.substring(3, 6);
+                }
+                if (digits.length >= 7) {
+                    formatted += '-' + digits.substring(6, 10);
+                }
+                e.target.value = formatted;
+            });
+
+            // Form Submission Handler
+            const signupForm = document.getElementById('signupForm');
+            const errorBanner = document.getElementById('formErrorBanner');
+            const errorText = document.getElementById('formErrorText');
+
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                errorBanner.classList.add('hidden');
+
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const selectedPathways = Array.from(document.querySelectorAll('.pathway-checkbox:checked')).map(cb => cb.value);
+
+                // Validate Name
+                if (!fullName) {
+                    showFormError('Please enter your full name so we know who is joining.');
+                    document.getElementById('fullName').focus();
+                    return;
+                }
+
+                // Validate Email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    showFormError('Please enter a valid email address for civic dispatches.');
+                    document.getElementById('email').focus();
+                    return;
+                }
+
+                // Validate Phone
+                const phoneDigits = phone.replace(/\D/g, '');
+                if (phoneDigits.length < 10) {
+                    showFormError('Please enter a valid 10-digit phone number.');
+                    document.getElementById('phone').focus();
+                    return;
+                }
+
+                // Validate at least one involvement option
+                if (selectedPathways.length === 0) {
+                    showFormError('Please select at least one way you would like to get involved with Citizens 4 Ontario.');
+                    return;
+                }
+
+                // Populate Confirmation View
+                const firstName = fullName.split(' ')[0];
+                document.getElementById('confirmName').textContent = firstName;
+                document.getElementById('confirmEmail').textContent = email;
+                document.getElementById('confirmPhone').textContent = phone;
+                
+                const now = new Date();
+                document.getElementById('confirmTimestamp').textContent = 
+                    `LOG #${Math.floor(1000 + Math.random() * 9000)} • ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+
+                const pathwaysListEl = document.getElementById('confirmPathwaysList');
+                pathwaysListEl.innerHTML = '';
+                selectedPathways.forEach(track => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-start gap-2.5 bg-dashLight p-2.5 rounded-lg border border-slate900/20';
+                    li.innerHTML = `
+                        <span class="inline-flex items-center justify-center w-5 h-5 rounded bg-signal text-slate900 font-mono text-xs font-bold shrink-0 mt-0.5">✓</span>
+                        <span>${track}</span>
+                    `;
+                    pathwaysListEl.appendChild(li);
+                });
+
+                // Swap form for confirmation state
+                signupForm.classList.add('hidden');
+                document.getElementById('confirmationState').classList.remove('hidden');
+            });
+
+            function showFormError(msg) {
+                errorText.textContent = msg;
+                errorBanner.classList.remove('hidden');
+            }
+        });
+
+        // Reset form to allow adding another neighbor
+        function resetSignupForm() {
+            const signupForm = document.getElementById('signupForm');
+            const confirmationState = document.getElementById('confirmationState');
+            signupForm.reset();
+
+            // Re-sync visual card states
+            const checkboxes = document.querySelectorAll('.pathway-checkbox');
+            checkboxes.forEach((cb, idx) => {
+                cb.checked = (idx === 1); // Default check on second option
+                const card = cb.closest('.pathway-card');
+                const icon = card.querySelector('.check-icon');
+                if (cb.checked) {
+                    card.classList.add('selected');
+                    icon.classList.remove('opacity-0');
+                } else {
+                    card.classList.remove('selected');
+                    icon.classList.add('opacity-0');
+                }
+            });
+
+            confirmationState.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            document.getElementById('fullName').focus();
+        }
+
+        // Clipboard Copy Helper (using execCommand fallback for iframe compatibility)
+        function copySplashLink() {
+            const dummyInput = document.createElement('textarea');
+            dummyInput.value = window.location.href || 'https://citizens4ontario.org/splash';
+            document.body.appendChild(dummyInput);
+            dummyInput.select();
+            try {
+                document.execCommand('copy');
+                const copyText = document.getElementById('copyLinkText');
+                copyText.textContent = '✓ Link Copied to Clipboard!';
+                setTimeout(() => {
+                    copyText.textContent = 'Copy Recruitment Link';
+                }, 2500);
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(dummyInput);
+        }
+    </script>
+</body>
+</html>
