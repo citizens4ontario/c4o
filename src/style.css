@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* Brand tokens (was the inline tailwind.config) */
+@theme {
+    --color-slate900: #0F172A;     /* Primary: Investigative Slate */
+    --color-signal: #E9B8C9;       /* Secondary Accent: Signal Rose/Red */
+    --color-signalDark: #d48ea7;   /* Hover/Active state for Signal */
+    --color-dashLight: #F8F9FA;    /* Secondary Background: Dashboard Light */
+    --color-slate800: #1E293B;
+    --color-slate700: #334155;
+
+    --font-slab: "Roboto Slab", serif;
+    --font-sans: Inter, sans-serif;
+    --font-mono: "Space Mono", monospace;
+
+    --shadow-placard: 6px 6px 0px 0px #E9B8C9;
+    --shadow-placard-dark: 6px 6px 0px 0px #0F172A;
+    --shadow-placard-sm: 4px 4px 0px 0px #0F172A;
+    --shadow-placard-white: 6px 6px 0px 0px #F8F9FA;
+}
+
+/* Tailwind v4 dropped pointer cursors on buttons; restore v3 behaviour */
+@layer base {
+    button:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
+/* Custom Campaign & Civic Grid Styling */
+body {
+    background-color: #0F172A;
+    color: #F8F9FA;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Subtle Investigative Blueprint Grid Overlay */
+.civic-grid-bg {
+    background-size: 40px 40px;
+    background-image:
+        linear-gradient(to right, rgba(233, 184, 201, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(233, 184, 201, 0.07) 1px, transparent 1px);
+}
+
+.civic-grid-light {
+    background-size: 32px 32px;
+    background-image:
+        linear-gradient(to right, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+}
+
+/* Grassroots Slanted Headline Banner Effect (AOC Splash Inspired) */
+.placard-slant {
+    transform: rotate(-1.5deg);
+}
+
+.placard-slant-reverse {
+    transform: rotate(1deg);
+}
+
+/* Custom Checkbox Card Transitions */
+.pathway-card {
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pathway-card.selected {
+    background-color: #0F172A;
+    color: #F8F9FA;
+    border-color: #0F172A;
+    box-shadow: 5px 5px 0px 0px #E9B8C9;
+    transform: translate(-2px, -2px);
+}
+
+.pathway-card.selected .check-indicator {
+    background-color: #E9B8C9;
+    border-color: #E9B8C9;
+    color: #0F172A;
+}
+
+.pathway-card.selected .pathway-tag {
+    background-color: rgba(233, 184, 201, 0.2);
+    color: #E9B8C9;
+    border-color: rgba(233, 184, 201, 0.4);
+}
+
+.pathway-card.selected .pathway-desc {
+    color: #CBD5E1;
+}
